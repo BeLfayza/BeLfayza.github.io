@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Eater</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #001100;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            color: #cfeccc;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-card {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #042004;
+            position: relative;
+        }
+
+        canvas {
+            background: #0a2b0a;
+            image-rendering: pixelated;
+            width: 100%;
+            height: 100%;
+        }
+
+        .panel {
+            width: 280px;
+            background: #07160a;
+            padding: 16px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border-left: 2px solid #0f5b0f;
+        }
+
+        .score {
+            font-size: 36px;
+            font-weight: bold;
+            color: #7abfff;
+            text-align: center;
+            background: #053d6a;
+            border-radius: 8px;
+            padding: 8px 0;
+            border: 2px solid #0f5b0f;
+        }
+
+        .instructions {
+            font-size: 14px;
+            color: #bde9b7;
+        }
+
+        .instructions ul {
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        .instructions li {
+            margin-bottom: 6px;
+        }
+
+        .pauseMsg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: #ffb84d;
+            display: none;
+        }
+
+        .keypanel {
+            font-size: 14px;
+            color: #ffcc66;
+            margin-top: 16px;
+        }
+
+        .keys-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .keys-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .key-row {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .key {
+            width: 40px;
+            height: 40px;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border-radius: 4px;
+            user-select: none;
+            transition: background 0.1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="game-card">
+            <canvas id="game"></canvas>
+            <div class="pauseMsg" id="pauseMsg">PAUSED</div>
+        </div>
+        <div class="panel">
+            <div class="score" id="score">0</div>
+            <div class="instructions">
+                <ul>
+                    <li>Gerak: Panah / WASD</li>
+                    <li>Pause: SPACE / P</li>
+                    <li>Hindari menabrak tembok & diri sendiri</li>
+                </ul>
+            </div>
+            <div class="keypanel">
+                <div class="keys-container">
+                    <!-- WASD -->
+                    <div class="keys-group" id="wasd">
+                        <div class="key" id="w">W</div>
+                        <div class="key-row">
+                            <div class="key" id="a">A</div>
+                            <div class="key" id="s">S</div>
+                            <div class="key" id="d">D</div>
+                        </div>
+                    </div>
+                    <!-- Panah -->
+                    <div class="keys-group" id="arrows">
+                        <div class="key" id="ArrowUp">↑</div>
+                        <div class="key-row">
+                            <div class="key" id="ArrowLeft">←</div>
+                            <div class="key" id="ArrowDown">↓</div>
+                            <div class="key" id="ArrowRight">→</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (() => {
+            const canvas = document.getElementById('game');
+            const ctx = canvas.getContext('2d');
+            const scoreEl = document.getElementById('score');
+            const pauseMsg = document.getElementById('pauseMsg');
+            const eatSound = new Audio('maem.mp3');
+            const deadSound = new Audio('mati.mp3');
+            const turnSound = new Audio('belok.mp3');
+
+            let TILE = 24;
+            let COLS, ROWS;
+            let snake = [], dir = { x: 0, y: 0 }, nextDir = { x: 0, y: 0 }, food = null;
+            let score = 0, speed = 8, lastTime = 0, acc = 0;
+            let running = false, gameOver = false;
+            const highScoreKey = 'nokia-snake-highscore';
+            const keysPressedEl = document.getElementById('keysPressed');
+            let keysHistory = [];
+
+            function resizeCanvas() {
+                const containerWidth = window.innerWidth - 280;
+                const containerHeight = window.innerHeight;
+                COLS = Math.floor(containerWidth / TILE);
+                ROWS = Math.floor(containerHeight / TILE);
+                canvas.width = COLS * TILE;
+                canvas.height = ROWS * TILE;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function reset() {
+                const midX = Math.floor(COLS / 2);
+                const midY = Math.floor(ROWS / 2);
+                snake = [{ x: midX, y: midY }];
+                dir = { x: 0, y: 0 };
+                nextDir = { x: 0, y: 0 };
+                placeFood();
+                score = 0;
+                speed = 8;
+                running = false;
+                gameOver = false;
+                updateUI();
+                pauseMsg.style.display = 'none';
+            }
+
+            function placeFood() {
+                for (let i = 0; i < 1000; i++) {
+                    const f = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+                    if (!snake.some(s => s.x === f.x && s.y === f.y) && !isWall(f.x, f.y)) { food = f; return; }
+                }
+                food = { x: 1, y: 1 };
+            }
+
+            function updateUI() {
+                scoreEl.textContent = score;
+            }
+
+            function isWall(x, y) {
+                return x === 0 || x === COLS - 1 || y === 0 || y === ROWS - 1;
+            }
+
+            function drawCell(x, y, color) {
+                ctx.fillStyle = color;
+                ctx.fillRect(x * TILE, y * TILE, TILE, TILE);
+            }
+
+            function render() {
+                ctx.fillStyle = '#052a05';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                for (let x = 0; x < COLS; x++) {
+                    drawCell(x, 0, '#555');
+                    drawCell(x, ROWS - 1, '#555');
+                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                    ctx.fillRect(x * TILE, 0, TILE, 2);
+                    ctx.fillRect(x * TILE, (ROWS - 1) * TILE, TILE, 2);
+                }
+                for (let y = 0; y < ROWS; y++) {
+                    drawCell(0, y, '#555');
+                    drawCell(COLS - 1, y, '#555');
+                    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                    ctx.fillRect(0, y * TILE, 2, TILE);
+                    ctx.fillRect((COLS - 1) * TILE, y * TILE, 2, TILE);
+                }
+
+                if (food) drawCell(food.x, food.y, '#ff0000');
+
+                snake.forEach((s, i) => {
+                    ctx.fillStyle = i === 0 ? '#80c0ff' : '#1a75ff';
+                    drawCell(s.x, s.y, ctx.fillStyle);
+                });
+            }
+
+            function step() {
+                if (!running) return;
+                if (dir.x === 0 && dir.y === 0) return;
+
+                dir = nextDir;
+                const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+
+                if (isWall(head.x, head.y)) return gameOverFunc();
+
+                if (running && snake.some(s => s.x === head.x && s.y === head.y)) return gameOverFunc();
+
+                snake.unshift(head);
+
+                if (food && head.x === food.x && head.y === food.y) {
+                    score += 10;
+                    // speed = Math.min(24, speed + 0.5); // fitur speed up dihapus
+                    placeFood();
+                    updateUI();
+                    playSound(eatSound);
+                } else snake.pop();
+            }
+
+            function gameOverFunc() {
+                if (gameOver) return;
+                running = false;
+                gameOver = true;
+
+                const prevHigh = parseInt(localStorage.getItem(highScoreKey) || '0', 10);
+                if (score > prevHigh) localStorage.setItem(highScoreKey, score);
+                playSound(deadSound);
+                setTimeout(() => {
+                    alert('Game Over! Skor: ' + score + '\nHigh Score: ' + localStorage.getItem(highScoreKey));
+                    reset();
+                }, 50);
+            }
+
+
+            function loop(ts) {
+                if (!lastTime) lastTime = ts;
+                const dt = (ts - lastTime) / 1000; lastTime = ts;
+                if (running) { acc += dt; const interval = 1 / speed; while (acc >= interval) { step(); acc -= interval; } }
+                render();
+                requestAnimationFrame(loop);
+            }
+
+            const keyMap = {
+                'ArrowUp': 'ArrowUp',
+                'ArrowDown': 'ArrowDown',
+                'ArrowLeft': 'ArrowLeft',
+                'ArrowRight': 'ArrowRight',
+                'w': 'w', 'W': 'w',
+                'a': 'a', 'A': 'a',
+                's': 's', 'S': 's',
+                'd': 'd', 'D': 'd'
+            };
+
+            window.addEventListener('keydown', e => {
+                const keyId = keyMap[e.key];
+                if (keyId) document.getElementById(keyId).style.background = '#fff';
+
+                if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') startMove(0, -1);
+                if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') startMove(0, 1);
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') startMove(-1, 0);
+                if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') startMove(1, 0);
+                if (e.key === ' ' || e.key === 'p' || e.key === 'P') togglePause();
+            });
+
+            window.addEventListener('keyup', e => {
+                const keyId = keyMap[e.key];
+                if (keyId) document.getElementById(keyId).style.background = '#000';
+            });
+
+            function startMove(x, y) {
+                if (!running && !gameOver) {
+                    dir = { x, y };
+                    nextDir = { x, y };
+                    running = true;
+                    return;
+                }
+                if (x === -dir.x && y === -dir.y) return;
+                if (x !== dir.x || y !== dir.y) playSound(turnSound);
+                nextDir = { x, y };
+            }
+
+            function playSound(sound) {
+                const s = sound.cloneNode();
+                s.play();
+            }
+
+            function togglePause() { running = !running; pauseMsg.style.display = running ? 'none' : 'block'; }
+
+            reset();
+            requestAnimationFrame(loop);
+
+        })();
+    </script>
+</body>
+
+</html>
