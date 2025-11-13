@@ -83,12 +83,24 @@
   <script>
     let count = 0;
 
+    // Ambil nilai dari localStorage saat halaman dimuat
+    window.onload = () => {
+      const saved = localStorage.getItem('yadaCounter');
+      if (saved !== null) {
+        count = parseInt(saved);
+        document.getElementById('counter').textContent = count;
+      }
+    };
+
     function spawnChibi() {
       const sound = new Audio('yadayadadesu.mp3');
       sound.play();
 
       count++;
       document.getElementById('counter').textContent = count;
+
+      // Simpan ke localStorage
+      localStorage.setItem('yadaCounter', count);
 
       const chibi = document.createElement('img');
       chibi.src = 'chibi.png';
@@ -115,6 +127,5 @@
       setTimeout(() => chibi.remove(), duration * 1000);
     }
   </script>
-
 </body>
 </html>
