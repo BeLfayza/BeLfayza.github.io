@@ -3,40 +3,138 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My GitHub Page</title>
+  <title>Projek Aneh2</title>
   <style>
+    /* Reset dasar */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background-color: #1e1e1e;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0b0c10;
       color: #ffffff;
+    }
+
+    /* Navbar */
+    header {
+      background-color: #1b1c1f;
+      padding: 15px 50px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      font-size: 1.8em;
+      color: #00adee;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #00adee;
+    }
+
+    /* Banner */
+    .banner {
+      width: 100%;
+      height: 400px;
+      background: url('https://cdn.cloudflare.steamstatic.com/steam/apps/2565555/header.jpg') center/cover no-repeat;
+      display: flex;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
     }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 20px;
+    .banner h2 {
+      background-color: rgba(0,0,0,0.6);
+      padding: 20px 40px;
+      font-size: 2.5em;
+      border-radius: 10px;
     }
-    a {
-      color: #00bfff;
-      text-decoration: none;
-      font-size: 1.5em;
-      margin: 10px;
+
+    /* Section game/produk */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 40px 50px;
     }
-    a:hover {
-      text-decoration: underline;
+    .game-card {
+      background-color: #1b1c1f;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+    .game-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .game-card h3 {
+      padding: 10px;
+      font-size: 1.2em;
+      color: #00adee;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1b1c1f;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    @media(max-width: 600px){
+      header { flex-direction: column; gap: 10px; }
+      .banner h2 { font-size: 1.8em; padding: 15px 20px; }
     }
   </style>
 </head>
 <body>
-  <h1>Selamat Datang di Halaman GitHub Saya!</h1>
-  <div>
-    <a href="https://github.com/USERNAME" target="_blank">GitHub</a>
-    <a href="https://linkedin.com/in/USERNAME" target="_blank">LinkedIn</a>
-    <a href="https://twitter.com/USERNAME" target="_blank">Twitter</a>
+
+  <header>
+    <h1>Projek Aneh2</h1>
+    <nav>
+      <a href="#">Beranda</a>
+      <a href="#">Toko</a>
+      <a href="#">Komunitas</a>
+      <a href="#">Tentang</a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    <h2>Selamat Datang di Projek Aneh2!</h2>
   </div>
+
+  <section class="game-grid">
+    <div class="game-card">
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/620/ss_1a1b1c2d3e4f5g6h7i8j9k0l.jpg" alt="Game 1">
+      <h3>Game Aneh 1</h3>
+    </div>
+    <div class="game-card">
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/730/ss_abcdef1234567890.jpg" alt="Game 2">
+      <h3>Game Aneh 2</h3>
+    </div>
+    <div class="game-card">
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/578080/ss_0987654321fedcba.jpg" alt="Game 3">
+      <h3>Game Aneh 3</h3>
+    </div>
+    <div class="game-card">
+      <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/440/ss_1122334455.jpg" alt="Game 4">
+      <h3>Game Aneh 4</h3>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Projek Aneh2. Semua hak cipta dilindungi.
+  </footer>
+
 </body>
 </html>
