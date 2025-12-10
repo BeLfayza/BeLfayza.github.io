@@ -69,6 +69,11 @@
             flex: 1;
             margin-left: 20px;
         }
+        .github {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+        }
 
         body.dark-mode .title {
             color: #fff;
@@ -138,9 +143,11 @@
             0% {
                 transform: translateX(0);
             }
+
             99.5% {
                 transform: translateX(calc(-500px * 10));
             }
+
             100% {
                 transform: translateX(0);
             }
@@ -417,11 +424,13 @@
         <!-- Header -->
         <div class="header">
             <div class="music-player">
-                <button class="btn-circle btn-play" id="playBtn" title="Play Music" style="width: 45px; height: 45px; margin: 0;">▶</button>
+                <button class="btn-circle btn-play" id="playBtn" title="Play Music"
+                    style="width: 45px; height: 45px; margin: 0;">▶</button>
                 <audio id="audioPlayer" src="aset/hikari.mp3"></audio>
                 <span class="song-title">光の後ろ姿 / A Shining Silhouette</span>
             </div>
             <h1 class="title">Testing</h1>
+            <a class="github" href="https://github.com/BeLfayza/">GitHub</a>
             <div class="controls">
             </div>
         </div>
@@ -461,77 +470,77 @@
         <div class="anime-portrait">
             <img src="aset/anime.png" alt="Character">
         </div>
-    <script>
-        // Banner Scroll Animation with Random Order
-        const bannerScroll = document.querySelector('.banner-scroll');
-        const bannerImages = Array.from(document.querySelectorAll('.banner-image'));
-        
-        // Shuffle function
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        <script>
+            // Banner Scroll Animation with Random Order
+            const bannerScroll = document.querySelector('.banner-scroll');
+            const bannerImages = Array.from(document.querySelectorAll('.banner-image'));
+
+            // Shuffle function
+            function shuffleArray(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
             }
-            return shuffled;
-        }
 
-        // Clear existing images and add shuffled ones
-        bannerScroll.innerHTML = '';
-        const shuffledImages = shuffleArray(bannerImages);
-        
-        // Add shuffled images multiple times for seamless loop
-        for (let i = 0; i < 10; i++) {
-            shuffledImages.forEach(img => {
-                const newImg = img.cloneNode(true);
-                bannerScroll.appendChild(newImg);
-            });
-        }
+            // Clear existing images and add shuffled ones
+            bannerScroll.innerHTML = '';
+            const shuffledImages = shuffleArray(bannerImages);
 
-        // Play Button
-        const playBtn = document.getElementById('playBtn');
-        const audioPlayer = document.getElementById('audioPlayer');
-        let isPlaying = false;
-
-        playBtn.addEventListener('click', () => {
-            if (isPlaying) {
-                audioPlayer.pause();
-                playBtn.textContent = '▶';
-                isPlaying = false;
-            } else {
-                audioPlayer.play();
-                playBtn.textContent = '⏸';
-                isPlaying = true;
+            // Add shuffled images multiple times for seamless loop
+            for (let i = 0; i < 10; i++) {
+                shuffledImages.forEach(img => {
+                    const newImg = img.cloneNode(true);
+                    bannerScroll.appendChild(newImg);
+                });
             }
-        });
 
-        audioPlayer.addEventListener('ended', () => {
-            playBtn.textContent = '▶';
-            isPlaying = false;
-        });
+            // Play Button
+            const playBtn = document.getElementById('playBtn');
+            const audioPlayer = document.getElementById('audioPlayer');
+            let isPlaying = false;
 
-        // Gallery Navigation
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        galleryItems.forEach((item) => {
-            item.addEventListener('click', () => {
-                const page = item.getAttribute('data-page');
-                if (page === 'page1') {
-                    window.location.href = 'https://belfayza.github.io/yadayadadesu/';
-                } else if (page === 'page2') {
-                    window.location.href = 'https://belfayza.github.io/snake-eater/';
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audioPlayer.pause();
+                    playBtn.textContent = '▶';
+                    isPlaying = false;
+                } else {
+                    audioPlayer.play();
+                    playBtn.textContent = '⏸';
+                    isPlaying = true;
                 }
             });
-        });
 
-        // Game Card Navigation
-        const gameCards = document.querySelectorAll('.game-card');
-        gameCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const link = card.getAttribute('data-link');
-                if (link && link !== "#") window.location.href = link;
+            audioPlayer.addEventListener('ended', () => {
+                playBtn.textContent = '▶';
+                isPlaying = false;
             });
-        });
-    </script>
+
+            // Gallery Navigation
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            galleryItems.forEach((item) => {
+                item.addEventListener('click', () => {
+                    const page = item.getAttribute('data-page');
+                    if (page === 'page1') {
+                        window.location.href = 'https://belfayza.github.io/yadayadadesu/';
+                    } else if (page === 'page2') {
+                        window.location.href = 'https://belfayza.github.io/snake-eater/';
+                    }
+                });
+            });
+
+            // Game Card Navigation
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const link = card.getAttribute('data-link');
+                    if (link && link !== "#") window.location.href = link;
+                });
+            });
+        </script>
 
 </body>
 
