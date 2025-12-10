@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Testing</title>
+    <title>Testing</title>
     <link rel="icon" type="image/jpg" href="https://avatars.githubusercontent.com/u/98310665">
     <style>
         * {
@@ -15,188 +15,335 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0b0c10;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
+            background: light;
+            color: #333;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
             min-height: 100vh;
-            transition: background-color 0.3s, color 0.3s;
+            overflow: hidden;
         }
 
-        /* Navbar */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
+        @media (prefers-color-scheme: light) {
+            body {
+                background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+                color: #333;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+                color: #fff;
+            }
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+        }
+
+        .container {
             width: 100%;
-            background-color: #1b1c1f85;
+            margin: 0;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 50px;
-            z-index: 100;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        header h1 {
-            font-size: 1.8em;
-            color: #00adee;
+        body.dark-mode .header {
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        nav {
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        body.dark-mode .title {
+            color: #fff;
+        }
+
+        /* Music Player */
+        .music-player {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 10px 15px;
+            border-radius: 50px;
         }
 
-        nav a,
-        .nav-btn {
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: bold;
-            background: none;
+        body.dark-mode .music-player {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        #audioPlayer {
+            width: 0;
+            margin: 0;
+        }
+
+        .song-title {
+            font-size: 14px;
+            color: #666;
+            min-width: 150px;
+        }
+
+        body.dark-mode .song-title {
+            color: #aaa;
+        }
+
+        /* Kontrol Tombol */
+        .controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             border: none;
             cursor: pointer;
-            font-size: 1em;
-            transition: color 0.3s, transform 0.2s;
-        }
-
-        nav a:hover,
-        .nav-btn:hover {
-            color: #00adee;
-            transform: translateY(-2px);
-        }
-
-        /* Wrapper konten utama */
-        main {
-            margin-top: 70px;
-            flex-grow: 1;
-        }
-
-        /* Banner */
-        .banner-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
+            font-size: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .banner-container img {
-            position: absolute;
+        .btn-circle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-play {
+            background-color: #000;
+            color: #fff;
+        }
+
+        body.dark-mode .btn-play {
+            background-color: #444;
+        }
+
+        .btn-theme {
+            background-color: #ffff00;
+            color: #000;
+        }
+
+        body.dark-mode .btn-theme {
+            background-color: #ffcc00;
+        }
+
+        /* Banner dengan Scroll */
+        .banner-container {
+            position: relative;
             width: 100%;
+            height: 300px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .banner-scroll {
+            display: flex;
+            height: 100%;
+            animation: scrollBanner 20s linear infinite;
+        }
+
+        .banner-image {
+            min-width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
         }
 
-        .banner-container img.active {
-            opacity: 1;
+        @keyframes scrollBanner {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
-        .banner-container h2 {
-            position: relative;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px 40px;
-            font-size: 2.5em;
-            border-radius: 10px;
+        /* Main Content Area */
+        .content-area {
+            display: block;
+            margin-bottom: 0;
+            padding: 30px 40px;
+            padding-right: 40px;
+            height: calc(100vh - 350px);
+            overflow-y: auto;
         }
 
-        /* Grid game */
-        .game-grid {
+        /* Gallery */
+        .gallery {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            padding: 40px 50px;
+            margin-bottom: 30px;
+            padding-right: 700px;
         }
 
-        .game-card {
-            background-color: #1b1c1f;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.2s;
+        .gallery-item {
+            position: relative;
             cursor: pointer;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            height: 280px;
+            background-color: #000;
         }
 
-        .game-card:hover {
+        .gallery-item:hover {
             transform: scale(1.05);
         }
 
-        .game-card img {
+        .gallery-item img {
             width: 100%;
-            height: 250px;
+            height: 100%;
             object-fit: cover;
         }
 
-        .game-card h3 {
-            padding: 10px;
-            font-size: 1.2em;
-            color: #00adee;
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
-        @media (max-width: 1000px) {
-            .game-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
         }
 
-        @media (max-width: 600px) {
-            header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            nav {
-                gap: 10px;
-            }
-
-            .banner-container h2 {
-                font-size: 1.8em;
-                padding: 15px 20px;
-            }
-
-            .game-grid {
-                grid-template-columns: 1fr;
-            }
+        .arrow-right {
+            font-size: 48px;
+            color: #fff;
         }
 
-        .explanation-container {
-            padding: 60px 50px;
-            background-color: #1b1c1f;
-            border-radius: 10px;
-            margin: 30px 50px;
+        /* Anime Portrait */
+        .anime-portrait {
+            position: fixed;
+            right: -500px;
+            top: 50px;
+            width: 70%;
+            background: transparent;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .explanation-container h2 {
-            font-size: 3em;
-            color: #ff0000;
+        body.dark-mode .anime-portrait {
+            background: transparent;
+        }
+
+        .anime-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: right bottom;
+        }
+
+        /* Spotify Section */
+        .spotify-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 0;
+        }
+
+        body.dark-mode .spotify-section {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .spotify-section h2 {
+            font-size: 24px;
             margin-bottom: 20px;
-        }
-
-        .explanation-container p {
-            font-size: 1.2em;
-            color: #ccc;
-            margin: 20px auto 0 auto;
-            line-height: 1.6;
+            color: #1DB954;
         }
 
         .spotify-grid {
-            padding: 60px 50px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
         }
 
-        @media (max-width: 992px) {
+        @media (max-width: 1200px) {
+            .anime-portrait {
+                width: 100%;
+                position: relative;
+                height: 400px;
+                top: auto;
+                right: auto;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .content-area {
+                padding-right: 40px;
+                min-height: auto;
+                margin-bottom: 30px;
+            }
+
             .spotify-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .title {
+                font-size: 24px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .banner-container {
+                height: 200px;
+            }
+
+            .anime-portrait {
+                height: 350px;
+            }
+
+            .spotify-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 20px;
+            }
+
+            .btn-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
+            }
+
             .spotify-grid {
                 grid-template-columns: 1fr;
             }
@@ -207,183 +354,192 @@
             height: 152px;
             border-radius: 12px;
         }
+
+        /* Game Grid */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 30px 40px;
+            margin-bottom: 0;
+        }
+
+        .game-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .game-card {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .game-card h3 {
+            padding: 15px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        body.dark-mode .game-card h3 {
+            color: #fff;
+        }
+
+        @media (max-width: 1000px) {
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>My Testing</h1>
-        <nav>
-            <a href="https://github.com/BeLfayza">GitHub</a>
-            <button class="nav-btn" id="toggle-mode">🌙</button>
-        </nav>
-    </header>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="music-player">
+                <button class="btn-circle btn-play" id="playBtn" title="Play Music" style="width: 45px; height: 45px; margin: 0;">▶</button>
+                <audio id="audioPlayer" src="aset/hikari.mp3"></audio>
+                <span class="song-title">光の後ろ姿 / A Shining Silhouette</span>
+            </div>
+            <h1 class="title">Testing</h1>
+            <div class="controls">
+                <button class="btn-circle btn-theme" id="themeBtn" title="Toggle Theme">☀️</button>
+            </div>
+        </div>
 
-    <main>
+        <!-- Banner dengan Scroll -->
         <div class="banner-container">
-            <img src="aset/banner.png" class="active">
-            <img src="aset/banner1.png">
-            <img src="aset/banner2.png">
-            <img src="aset/banner3.png">
-            <img src="aset/banner4.png">
-            <img src="aset/banner5.png">
-            <img src="aset/banner6.png">
-            <img src="aset/banner7.png">
-            <img src="aset/banner8.png">
-            <img src="aset/banner9.png">
-            <img src="aset/banner10.png">
-            <h2>Gak reti meh di isi opo</h2>
-        </div>
-        <div>
-            <h1 align="center" style="padding-top: 50px;">My Spotify Favorit Gw</h1>
-            <section class="spotify-grid">
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/3P157s5bN4ntodxmEMYCtO?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/1HNKxinsz9yDUKp68nNnxh?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/0DKaod4U8DOyesrlwvQzVH?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/6dax9Hnzxu66YXGVv3irqm?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/2veE1BXw4gCnVucczemnjH?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/3R0XM0PaKh2R7WYF8UJYe0?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/0y1IU0nxd80qrtC9E5LTFV?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/4jxb5oRajcFZL73ZIViac2?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/7mykoq6R3BArsSpNDjFQTm?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/4uoRsea1v7ONQygWEOl4nV?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/7bdRmM99BqfRGNo4NwSLCE?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/1RI9DeYuc16mTzr94zGjfC?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/1TH4Kmyu3QPe2J2BAe18FP?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/0UiRwRjRNrPS5SgtDHp5fJ?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/0iNJpaQyjpTftovBnpPDDA?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-                <iframe data-testid="embed-iframe" style="border-radius:12px"
-                    src="https://open.spotify.com/embed/track/6VlS13fWMZ1i3LSh7jczs8?utm_source=generator" width="100%"
-                    height="152" frameBorder="0" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
-            </section>
+            <div class="banner-scroll">
+                <img src="aset/banner.png" alt="Banner 1" class="banner-image">
+                <img src="aset/banner1.png" alt="Banner 2" class="banner-image">
+                <img src="aset/banner2.png" alt="Banner 3" class="banner-image">
+                <img src="aset/banner3.png" alt="Banner 4" class="banner-image">
+                <img src="aset/banner4.png" alt="Banner 5" class="banner-image">
+                <img src="aset/banner5.png" alt="Banner 6" class="banner-image">
+            </div>
         </div>
 
-        <section class="explanation-container">
-            <h2>ini deskripsi</h2>
-
+        <!-- Content Area dengan Gallery -->
+        <div class="content-area">
+            <div class="gallery">
+                <div class="gallery-item" data-page="page1">
+                    <img src="aset/thumbnail/mambo.png" alt="Gallery 1">
+                    <div class="gallery-item-overlay">
+                        <span class="arrow-right">→</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-page="page2">
+                    <img src="aset/thumbnail/snake.png" alt="Gallery 2">
+                    <div class="gallery-item-overlay">
+                        <span class="arrow-right">→</span>
+                    </div>
+                </div>
             </div>
+        </div>
 
-        </section>
-
-
-
-        <section class="game-grid" id="games">
-            <div class="game-card" data-link="https://belfayza.github.io/yadayadadesu/">
-                <img src="aset/thumbnail/mambo.png" alt="yadayadadesu">
-                <h3>YadaYadaDesu!</h3>
-            </div>
-            <div class="game-card" data-link="https://belfayza.github.io/snake-eater/">
-                <img src="aset/thumbnail/snake.png" alt="snake-eater">
-                <h3>Snake Eater</h3>
-            </div>
-            <div class="game-card" data-link="#">
-                <img src="aset/thumbnail/snake.png" alt="placeholder">
-                <h3>PlaceHolder</h3>
-            </div>
-            <div class="game-card" data-link="#">
-                <img src="aset/thumbnail/snake.png" alt="placeholder">
-                <h3>PlaceHolder</h3>
-            </div>
-            <div class="game-card" data-link="#">
-                <img src="aset/thumbnail/snake.png" alt="placeholder">
-                <h3>PlaceHolder</h3>
-            </div>
-        </section>
-    </main>
-
+        <!-- Anime Portrait (Fixed di sebelah kanan) -->
+        <div class="anime-portrait">
+            <img src="aset/anime.png" alt="Character">
+        </div>
     <script>
-        const banners = document.querySelectorAll('.banner-container img');
-        let current = 0;
-        setInterval(() => {
-            banners[current].classList.remove('active');
-            current = (current + 1) % banners.length;
-            banners[current].classList.add('active');
-        }, 2000);
+        // Banner Scroll Animation
+        const bannerScroll = document.querySelector('.banner-scroll');
+        const bannerImages = document.querySelectorAll('.banner-image');
+        
+        // Clone images untuk infinite scroll
+        bannerImages.forEach(img => {
+            const clone = img.cloneNode(true);
+            bannerScroll.appendChild(clone);
+        });
 
+        // Dark Mode Toggle - Check browser preference first
+        const themeBtn = document.getElementById('themeBtn');
+        const body = document.body;
+
+        // Check if user has preference saved
+        let darkMode = localStorage.getItem('darkMode');
+        
+        // If no preference, check browser preference
+        if (darkMode === null) {
+            darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } else {
+            darkMode = darkMode === 'true';
+        }
+
+        // Apply theme
+        if (darkMode) {
+            body.classList.add('dark-mode');
+            themeBtn.textContent = '🌙';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            themeBtn.textContent = body.classList.contains('dark-mode') ? '🌙' : '☀️';
+            localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+        });
+
+        // Play Button
+        const playBtn = document.getElementById('playBtn');
+        const audioPlayer = document.getElementById('audioPlayer');
+        let isPlaying = false;
+
+        playBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playBtn.textContent = '▶';
+                isPlaying = false;
+            } else {
+                audioPlayer.play();
+                playBtn.textContent = '⏸';
+                isPlaying = true;
+            }
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            playBtn.textContent = '▶';
+            isPlaying = false;
+        });
+
+        // Gallery Navigation
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        galleryItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                const page = item.getAttribute('data-page');
+                if (page === 'page1') {
+                    window.location.href = 'https://belfayza.github.io/yadayadadesu/';
+                } else if (page === 'page2') {
+                    window.location.href = 'https://belfayza.github.io/snake-eater/';
+                }
+            });
+        });
+
+        // Game Card Navigation
         const gameCards = document.querySelectorAll('.game-card');
         gameCards.forEach(card => {
             card.addEventListener('click', () => {
                 const link = card.getAttribute('data-link');
-                if (link && link !== "#") window.open(link, '_blank');
+                if (link && link !== "#") window.location.href = link;
             });
-        });
-
-        const btnMode = document.getElementById('toggle-mode');
-        let darkMode = true;
-        btnMode.addEventListener('click', () => {
-            if (darkMode) {
-                document.body.style.backgroundColor = '#f5f5f5';
-                document.body.style.color = '#000';
-                btnMode.textContent = '🌞';
-            } else {
-                document.body.style.backgroundColor = '#0b0c10';
-                document.body.style.color = '#fff';
-                btnMode.textContent = '🌙';
-            }
-            darkMode = !darkMode;
         });
     </script>
 
