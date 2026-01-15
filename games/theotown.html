@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TheoTown</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Thumbnail */
+        .thumbnail {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Info Game */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .game-meta {
+            line-height: 1.8;
+        }
+
+        .game-meta span {
+            display: block;
+            font-size: 15px;
+            color: #bdbdbd;
+        }
+
+        .game-meta strong {
+            color: #ffffff;
+        }
+
+        .download-btn {
+            background: #9900ff;
+            color: #000;
+            padding: 14px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition:
+                background 0.3s ease,
+                color 0.3s ease,
+                filter 0.3s ease;
+        }
+
+        /* Hover hitam putih */
+        .download-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            filter: grayscale(100%);
+        }
+
+        /* Deskripsi */
+        .description {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .description h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            line-height: 1.7;
+            color: #dcdcdc;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 15, 15, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .github {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a class="title" href="https://belfayza.github.io/games/">Kembali</a>
+            <div class="controls">
+            </div>
+        </div>
+        <!-- Thumbnail Game -->
+        <div class="thumbnail">
+            <img src="thumbnail/theotown.jpg" alt="Thumbnail Game">
+        </div>
+
+        <!-- Ukuran, Versi & Tombol Download -->
+        <div class="game-info">
+            <div class="game-meta">
+                <span><strong>Nama Game: </strong>TheoTown</span>
+                <span><strong>Versi: </strong>v1.12.36p</span>
+                <span><strong>Ukuran: </strong>153 MB</span>
+            </div>
+
+            <a href="https://drive.google.com/file/d/10UUTMXnchZ8Oy5cMcqeNm1xlJvQNzczu/view" class="download-btn">Download</a>
+        </div>
+
+        <!-- Deskripsi Game -->
+        <div class="description">
+            <p>
+                TheoTown offers an immersive city-building experience where you can construct and oversee your very own
+                metropolis. Assume the role of a skilled city builder and embark on managing multiple cities
+                simultaneously. From humble beginnings, develop your town into a sprawling, grand metropolis.
+            </p><p>
+                As mayor, you have the power to shape skylines and structures that reflect various statistics. Craft
+                intricate transportation networks to facilitate smooth mobility for your citizens. Establish train
+                stations, airports, and bus depots to dictate how your residents move around. Personalize and manage
+                your fleet of transportation vehicles, from customizing aircraft liveries to designing bus routes and
+                building rail networks.
+            </p><p>
+                Face challenges head-on, including natural disasters, disease outbreaks, crime waves, and fire
+                emergencies. Showcase your city's magnificence by constructing world wonders such as Big Ben, the Eiffel
+                Tower, the Statue of Liberty, and more. The possibilities are endless, as you can expand the game with
+                user-created plugins to fill any gaps you may feel exist.
+            </p><p>
+                In contrast to the mobile versions, TheoTown's premium edition on Steam ensures an ad-free and in-app
+                purchase-free experience. Enjoy all additional content conveniently bundled in a single package,
+                available for a fixed price. Immerse yourself in the ultimate city-building adventure without any
+                interruptions or hidden costs.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
