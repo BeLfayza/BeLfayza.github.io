@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>GTA:SA</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0f0f0f;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Thumbnail */
+        .thumbnail {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Info Game */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .game-meta {
+            line-height: 1.8;
+        }
+
+        .game-meta span {
+            display: block;
+            font-size: 15px;
+            color: #bdbdbd;
+        }
+
+        .game-meta strong {
+            color: #ffffff;
+        }
+
+        .download-btn {
+            background: #9900ff;
+            color: #000;
+            padding: 14px 26px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition:
+                background 0.3s ease,
+                color 0.3s ease,
+                filter 0.3s ease;
+        }
+
+        /* Hover hitam putih */
+        .download-btn:hover {
+            background: #000000;
+            color: #ffffff;
+            filter: grayscale(100%);
+        }
+
+        /* Deskripsi */
+        .description {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .description h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            line-height: 1.7;
+            color: #dcdcdc;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 15, 15, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .github {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <a class="title" href="https://belfayza.github.io/games/">Kembali</a>
+            <div class="controls">
+            </div>
+        </div>
+        <!-- Thumbnail Game -->
+        <div class="thumbnail">
+            <img src="thumbnail/gtasan.jpg" alt="Thumbnail Game">
+        </div>
+
+        <!-- Ukuran, Versi & Tombol Download -->
+        <div class="game-info">
+            <div class="game-meta">
+                <span><strong>Nama Game: </strong>Grand Theft Auto: San Andreas</span>
+                <span><strong>Versi: </strong>v1.0</span>
+                <span><strong>Ukuran: </strong>5 GB</span>
+            </div>
+
+            <a href="https://drive.google.com/drive/folders/15UOj8hSQQreEvMDfyWSlssZjGKGVJ6KH?usp=sharing"
+                class="download-btn">Download</a>
+        </div>
+
+        <!-- Deskripsi Game -->
+        <div class="description">
+            <p>
+                > Versi exe 1.0 (modding kompatibel) <br>
+                > Widescreen Fix <br>
+                > SilentPatch (fix mouse, dll)
+            </p>
+            <p>
+                About This Game
+                Five years ago Carl Johnson escaped from the pressures of life in Los Santos, San Andreas... a city
+                tearing itself apart with gang trouble, drugs and corruption. Where filmstars and millionaires do their
+                best to avoid the dealers and gangbangers.
+            </p>
+            <p>
+                Now, it's the early 90s. Carl's got to go home. His mother has been murdered, his family has fallen
+                apart and his childhood friends are all heading towards disaster.
+            </p>
+            <p>
+                On his return to the neighborhood, a couple of corrupt cops frame him for homicide. CJ is forced on a
+                journey that takes him across the entire state of San Andreas, to save his family and to take control of
+                the streets.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
