@@ -1,176 +1,283 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <title>TheoTown</title>
-    <link rel="icon" type="image/jpg" href="https://avatars.githubusercontent.com/u/98310665">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0f0f0f;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #ffffff;
-        }
+<meta charset="UTF-8">
+<title>TheoTown</title>
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/jpg" href="https://avatars.githubusercontent.com/u/98310665">
 
-        /* Thumbnail */
-        .thumbnail {
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 25px;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Oswald',sans-serif;
+}
 
-        .thumbnail img {
-            width: 100%;
-            display: block;
-        }
+body{
+    background:#0b001a;
+    color:white;
+    overflow-x:hidden;
+}
 
-        /* Info Game */
-        .game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4));
+    z-index:0;
+}
 
-        .game-meta {
-            line-height: 1.8;
-        }
+canvas{
+    position:fixed;
+    inset:0;
+    z-index:1;
+}
 
-        .game-meta span {
-            display: block;
-            font-size: 15px;
-            color: #bdbdbd;
-        }
+.container{
+    position:relative;
+    z-index:2;
+    max-width:1100px;
+    margin:60px auto;
+    padding:0 40px;
+}
 
-        .game-meta strong {
-            color: #ffffff;
-        }
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
 
-        .download-btn {
-            background: #9900ff;
-            color: #000;
-            padding: 14px 26px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            transition:
-                background 0.3s ease,
-                color 0.3s ease,
-                filter 0.3s ease;
-        }
+.back-btn{
+    text-decoration:none;
+    background:#5900ff;
+    padding:10px 20px;
+    color:white;
+    border-radius:6px;
+    transition:0.3s;
+}
 
-        /* Hover hitam putih */
-        .download-btn:hover {
-            background: #000000;
-            color: #ffffff;
-            filter: grayscale(100%);
-        }
+.back-btn:hover{
+    background:#7a2cff;
+    box-shadow:0 0 20px #5900ff;
+}
 
-        /* Deskripsi */
-        .description {
-            background: #1a1a1a;
-            padding: 20px;
-            border-radius: 12px;
-        }
+.title{
+    font-size:28px;
+    letter-spacing:3px;
+    color:#5900ff;
+}
 
-        .description h2 {
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
+/* Banner */
+.banner{
+    width:100%;
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:30px;
+}
 
-        .description p {
-            line-height: 1.7;
-            color: #dcdcdc;
-        }
+.banner img{
+    width:100%;
+    display:block;
+    transition:0.5s;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(15, 15, 15, 0.95);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+.banner:hover img{
+    transform:scale(1.05);
+}
 
-        .title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #fff;
-            flex: 1;
-            margin-left: 20px;
-        }
+/* Steam layout */
+.content{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:30px;
+}
 
-        .github {
-            font-size: 32px;
-            font-weight: bold;
-            color: #fff;
-        }
-    </style>
+.left{
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+}
+
+.left h2{
+    margin-bottom:15px;
+    color:#5900ff;
+}
+
+.left p{
+    line-height:1.8;
+    color:#dcdcdc;
+    margin-bottom:15px;
+}
+
+.right{
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:14px;
+    backdrop-filter:blur(10px);
+}
+
+.meta span{
+    display:block;
+    margin-bottom:10px;
+    color:#ccc;
+}
+
+.meta strong{
+    color:white;
+}
+
+.download-btn{
+    display:block;
+    width:100%;
+    margin-top:20px;
+    background:#5900ff;
+    color:white;
+    text-align:center;
+    padding:15px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    letter-spacing:1px;
+    transition:0.3s;
+}
+
+.download-btn:hover{
+    background:#7a2cff;
+    box-shadow:0 0 25px #5900ff;
+}
+
+@media(max-width:900px){
+    .content{
+        grid-template-columns:1fr;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
-        <div class="header">
-            <a class="title" href="https://belfayza.github.io/games/"><<</a>
-            <div class="controls">
-            </div>
-        </div>
-        <!-- Thumbnail Game -->
-        <div class="thumbnail">
-            <img src="thumbnail/theotown.jpg" alt="Thumbnail Game">
-        </div>
+<canvas id="particles"></canvas>
 
-        <!-- Ukuran, Versi & Tombol Download -->
-        <div class="game-info">
-            <div class="game-meta">
-                <span><strong>Nama Game: </strong>TheoTown</span>
-                <span><strong>Versi: </strong>v1.12.36p</span>
-                <span><strong>Ukuran: </strong>153 MB</span>
-            </div>
+<div class="container">
 
-            <a href="https://drive.google.com/file/d/10UUTMXnchZ8Oy5cMcqeNm1xlJvQNzczu/view" class="download-btn">Download</a>
-        </div>
+    <div class="header">
+        <a href="https://belfayza.github.io/games/" class="back-btn">BACK</a>
+        <div class="title">THEOTOWN</div>
+    </div>
 
-        <!-- Deskripsi Game -->
-        <div class="description">
+    <div class="banner">
+        <img src="thumbnail/theotown.jpg" alt="TheoTown">
+    </div>
+
+    <div class="content">
+
+        <!-- LEFT -->
+        <div class="left">
+            <h2>About This Game</h2>
+
             <p>
-                TheoTown offers an immersive city-building experience where you can construct and oversee your very own
-                metropolis. Assume the role of a skilled city builder and embark on managing multiple cities
-                simultaneously. From humble beginnings, develop your town into a sprawling, grand metropolis.
-            </p><p>
-                As mayor, you have the power to shape skylines and structures that reflect various statistics. Craft
-                intricate transportation networks to facilitate smooth mobility for your citizens. Establish train
-                stations, airports, and bus depots to dictate how your residents move around. Personalize and manage
-                your fleet of transportation vehicles, from customizing aircraft liveries to designing bus routes and
-                building rail networks.
-            </p><p>
-                Face challenges head-on, including natural disasters, disease outbreaks, crime waves, and fire
-                emergencies. Showcase your city's magnificence by constructing world wonders such as Big Ben, the Eiffel
-                Tower, the Statue of Liberty, and more. The possibilities are endless, as you can expand the game with
-                user-created plugins to fill any gaps you may feel exist.
-            </p><p>
-                In contrast to the mobile versions, TheoTown's premium edition on Steam ensures an ad-free and in-app
-                purchase-free experience. Enjoy all additional content conveniently bundled in a single package,
-                available for a fixed price. Immerse yourself in the ultimate city-building adventure without any
-                interruptions or hidden costs.
+                TheoTown offers an immersive city-building experience where you construct
+                and oversee your own metropolis. Develop your town from humble beginnings
+                into a sprawling modern city.
             </p>
+
+            <p>
+                Craft transportation networks including trains, airports, and buses.
+                Customize routes and manage infrastructure to keep citizens moving smoothly.
+            </p>
+
+            <p>
+                Face disasters, crime waves, fires, and expand your world with plugins.
+                The Steam edition provides a complete ad-free experience.
+            </p>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+
+            <div class="meta">
+                <span><strong>Nama Game:</strong> TheoTown</span>
+                <span><strong>Versi:</strong> v1.12.36p</span>
+                <span><strong>Ukuran:</strong> 153 MB</span>
+                <span><strong>Platform:</strong> Windows</span>
+            </div>
+
+            <a href="https://drive.google.com/file/d/10UUTMXnchZ8Oy5cMcqeNm1xlJvQNzczu/view"
+               class="download-btn">
+               DOWNLOAD
+            </a>
+
         </div>
 
     </div>
 
-</body>
+</div>
 
+<script>
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener("resize",()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+});
+
+let particles=[];
+
+class Particle{
+    constructor(){
+        this.x=Math.random()*canvas.width;
+        this.y=canvas.height+Math.random()*100;
+        this.size=Math.random()*70+20;
+        this.speedY=Math.random()*5+5;
+        this.opacity=Math.random()*0.4+0.1;
+    }
+    update(){
+        this.y-=this.speedY;
+        if(this.y<-100){
+            this.y=canvas.height+50;
+            this.x=Math.random()*canvas.width;
+        }
+    }
+    draw(){
+        ctx.beginPath();
+        let gradient=ctx.createRadialGradient(
+            this.x,this.y,0,
+            this.x,this.y,this.size
+        );
+        gradient.addColorStop(0,`rgba(89,0,255,${this.opacity})`);
+        gradient.addColorStop(1,"rgba(0,0,0,0)");
+        ctx.fillStyle=gradient;
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+    }
+}
+
+function init(){
+    for(let i=0;i<30;i++){
+        particles.push(new Particle());
+    }
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+
+</body>
 </html>
