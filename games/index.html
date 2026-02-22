@@ -1,474 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pre-Installed Games</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="https://avatars.githubusercontent.com/u/98310665">
-</head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: #0f0f0f;
-        color: #fff;
-        padding: 0;
-        transition: background 0.3s, color 0.3s;
-        min-height: 100vh;
-        overflow: hidden;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
 
-    @media (prefers-color-scheme: light) {
         body {
-            background: #0f0f0f;
-            color: #fff;
-        }
-    }
-
-    @media (prefers-color-scheme: dark) {
-        body {
-            background: #0f0f0f;
-            color: #fff;
-        }
-    }
-
-    body.dark-mode {
-        background: #0f0f0f;
-        color: #fff;
-    }
-
-    .container {
-        width: 100%;
-        margin: 0;
-        position: relative;
-    }
-
-    /* Header */
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        background: rgba(15, 15, 15, 0.95);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    body.dark-mode .header {
-        background: rgba(0, 0, 0, 0.95);
-    }
-
-    .title {
-        font-size: 32px;
-        font-weight: bold;
-        color: #fff;
-        flex: 1;
-        margin-left: 20px;
-    }
-
-    .github {
-        font-size: 32px;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    body.dark-mode .title {
-        color: #fff;
-    }
-
-    /* Music Player */
-    .music-player {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 10px 15px;
-        border-radius: 50px;
-    }
-
-    body.dark-mode .music-player {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .song-title {
-        font-size: 14px;
-        color: #aaa;
-        min-width: 150px;
-    }
-
-    body.dark-mode .song-title {
-        color: #aaa;
-    }
-
-    /* Kontrol Tombol */
-    .controls {
-        display: none;
-        gap: 15px;
-    }
-
-    /* Banner dengan Scroll */
-    .banner-container {
-        position: relative;
-        width: 100%;
-        height: 300px;
-        overflow: hidden;
-        box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        background: #000;
-    }
-
-    .banner-scroll {
-        display: flex;
-        height: 100%;
-        animation: scrollBanner 30s linear infinite;
-        gap: 0;
-    }
-
-    .banner-image {
-        min-width: auto;
-        width: 500px;
-        height: 100%;
-        object-fit: contain;
-        background: #000;
-        flex-shrink: 0;
-        padding: 0 5px;
-    }
-
-    @keyframes scrollBanner {
-        0% {
-            transform: translateX(0);
+            background: #0b001a;
+            color: white;
+            overflow-x: hidden;
         }
 
-        99.5% {
-            transform: translateX(calc(-500px * 10));
+        /* Overlay gradient */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4));
+            z-index: 0;
         }
 
-        100% {
-            transform: translateX(0);
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
         }
-    }
 
-    /* Main Content Area */
-    .content-area {
-        display: block;
-        margin-bottom: 0;
-        padding: 30px 40px;
-        padding-right: 40px;
-        height: calc(100vh - 350px);
-        overflow-y: auto;
-        color: #333;
-        background: transparent;
-    }
-
-    body.dark-mode .content-area {
-        color: #fff;
-        background: transparent;
-    }
-
-    /* Gallery */
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        margin-bottom: 30px;
-        padding-right: 700px;
-    }
-
-    .gallery-item {
-        position: relative;
-        cursor: pointer;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
-        transition: transform 0.2s;
-        height: 280px;
-        background-color: #000;
-    }
-
-    body.dark-mode .gallery-item {
-        background-color: #000;
-    }
-
-    .gallery-item:hover {
-        transform: scale(1.05);
-    }
-
-    .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .gallery-item-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.2s;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .gallery-item:hover .gallery-item-overlay {
-        opacity: 1;
-    }
-
-    .arrow-right {
-        font-size: 48px;
-        color: #fff;
-    }
-
-    .gallery-item-text {
-        font-size: 18px;
-        color: #fff;
-        font-weight: bold;
-        text-align: center;
-    }
-
-    /* Anime Portrait */
-    .anime-portrait {
-        position: fixed;
-        right: -500px;
-        top: 50px;
-        width: 70%;
-        background: transparent;
-        overflow: hidden;
-        pointer-events: none;
-        z-index: 10;
-    }
-
-    body.dark-mode .anime-portrait {
-        background: transparent;
-    }
-
-    .anime-portrait img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        object-position: right bottom;
-    }
-
-    /* Spotify Section */
-    .spotify-section {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 30px 40px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        margin-bottom: 0;
-        color: #333;
-    }
-
-    body.dark-mode .spotify-section {
-        background: rgba(30, 30, 30, 0.9);
-        color: #fff;
-    }
-
-    .spotify-section h2 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #1DB954;
-    }
-
-    .spotify-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-    }
-
-    @media (max-width: 1200px) {
-        .anime-portrait {
-            width: 100%;
+        .top-bar {
             position: relative;
-            height: 400px;
-            top: auto;
-            right: auto;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            padding: 40px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .content-area {
-            padding-right: 40px;
-            min-height: auto;
-            margin-bottom: 30px;
+        .top-bar a {
+            text-decoration: none;
+            background: #5900ff;
+            padding: 12px 25px;
+            color: white;
+            border-radius: 6px;
+            transition: 0.3s;
         }
 
-        .spotify-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .header {
-            flex-direction: column;
-            gap: 15px;
+        .top-bar a:hover {
+            box-shadow: 0 0 20px #5900ff;
+            background: #7a2cff;
         }
 
-        .title {
-            font-size: 24px;
+        .top-bar h1 {
+            font-size: 32px;
+            letter-spacing: 4px;
+            color: #5900ff;
         }
 
         .gallery {
-            grid-template-columns: 1fr;
+            position: relative;
+            z-index: 2;
+            padding: 40px 80px 100px 80px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
         }
 
-        .banner-container {
-            height: 200px;
+        .card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 12px;
+            cursor: pointer;
         }
 
-        .anime-portrait {
-            height: 350px;
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
         }
 
-        .spotify-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 480px) {
-        .title {
-            font-size: 20px;
+        .card:hover img {
+            transform: scale(1.1);
         }
 
-        .btn-circle {
-            width: 50px;
-            height: 50px;
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(89, 0, 255, 0.3);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-title {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
             font-size: 18px;
+            letter-spacing: 2px;
+            z-index: 3;
         }
 
-        .spotify-grid {
-            grid-template-columns: 1fr;
+        @media(max-width: 900px){
+            .gallery {
+                grid-template-columns: repeat(2,1fr);
+            }
         }
-    }
 
-    .spotify-grid iframe {
-        width: 100%;
-        height: 152px;
-        border-radius: 12px;
-    }
+        @media(max-width: 600px){
+            .gallery {
+                grid-template-columns: 1fr;
+            }
 
-    /* Game Grid */
-    .game-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        padding: 30px 40px;
-        margin-bottom: 0;
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
-    }
-
-    body.dark-mode .game-grid {
-        background: rgba(30, 30, 30, 0.9);
-        color: #fff;
-    }
-
-    .game-card {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        overflow: hidden;
-        transition: transform 0.2s;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    body.dark-mode .game-card {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .game-card:hover {
-        transform: scale(1.05);
-    }
-
-    .game-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-    }
-
-    .game-card h3 {
-        padding: 15px;
-        font-size: 1.1em;
-        color: #333;
-    }
-
-    body.dark-mode .game-card h3 {
-        color: #fff;
-    }
-
-    @media (max-width: 1000px) {
-        .game-grid {
-            grid-template-columns: repeat(2, 1fr);
+            .top-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
-    }
-
-    @media (max-width: 600px) {
-        .game-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
+    </style>
+</head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <a class="title" href="https://belfayza.github.io/">Home</a>
-            <a class="github" href="https://github.com/BeLfayza/">GitHub</a>
-            <div class="controls">
-            </div>
-        </div>
-        <div class="content-area">
-            <div class="gallery">
-                <div class="gallery-item" data-page="page1">
-                    <img src="thumbnail/theotown.jpg" alt="Gallery 1">
-                    <div class="gallery-item-overlay">
-                        <span class="gallery-item-text">TheoTown</span>
-                        <span class="arrow-right">→</span>
-                    </div>
-                </div>
-                <div class="gallery-item" data-page="page2">
-                    <img src="thumbnail/gtasan.jpg" alt="Gallery 2">
-                    <div class="gallery-item-overlay">
-                        <span class="gallery-item-text">Grand Theft Auto: San Andreas</span>
-                        <span class="arrow-right">→</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            // Gallery Navigation
-            const galleryItems = document.querySelectorAll('.gallery-item');
-            galleryItems.forEach((item) => {
-                item.addEventListener('click', () => {
-                    const page = item.getAttribute('data-page');
-                    if (page === 'page1') {
-                        window.location.href = 'https://belfayza.github.io/games/theotown';
-                    }else if (page === 'page2') {
-                        window.location.href = 'https://belfayza.github.io/games/gtasan';
-                    }
-                });
-            });
 
-            // Game Card Navigation
-            const gameCards = document.querySelectorAll('.game-card');
-            gameCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const link = card.getAttribute('data-link');
-                    if (link && link !== "#") window.location.href = link;
-                });
-            });
-        </script>
+<canvas id="particles"></canvas>
+
+<div class="top-bar">
+    <a href="https://belfayza.github.io/">BACK TO HOME</a>
+    <h1>PRE-INSTALLED GAMES</h1>
+</div>
+
+<div class="gallery">
+
+    <div class="card" onclick="location.href='https://belfayza.github.io/games/theotown'">
+        <img src="thumbnail/theotown.jpg" alt="TheoTown">
+        <div class="card-title">THEOTOWN</div>
     </div>
-</body>
 
+    <div class="card" onclick="location.href='https://belfayza.github.io/games/gtasan'">
+        <img src="thumbnail/gtasan.jpg" alt="GTA SA">
+        <div class="card-title">GTA SAN ANDREAS</div>
+    </div>
+
+</div>
+
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+let particles = [];
+
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = canvas.height + Math.random() * 100;
+        this.size = Math.random() * 70 + 20;
+        this.speedY = Math.random() * 5 + 5;
+        this.opacity = Math.random() * 0.4 + 0.1;
+    }
+
+    update() {
+        this.y -= this.speedY;
+        if (this.y < -100) {
+            this.y = canvas.height + 50;
+            this.x = Math.random() * canvas.width;
+        }
+    }
+
+    draw() {
+        ctx.beginPath();
+        let gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, this.size
+        );
+        gradient.addColorStop(0, `rgba(89,0,255,${this.opacity})`);
+        gradient.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = gradient;
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init() {
+    for (let i = 0; i < 30; i++) {
+        particles.push(new Particle());
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+
+</body>
 </html>
