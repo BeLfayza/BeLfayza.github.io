@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Devil May Cry 4</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpg" href="https://avatars.githubusercontent.com/u/98310665">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        body {
+            background: #0b001a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.4));
+            z-index: 0;
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: #5900ff;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #7a2cff;
+            box-shadow: 0 0 20px #5900ff;
+        }
+
+        .title {
+            font-size: 28px;
+            letter-spacing: 3px;
+            color: #5900ff;
+        }
+
+        /* Banner */
+        .banner {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .banner img {
+            width: 100%;
+            display: block;
+            transition: 0.5s;
+        }
+
+        .banner:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Steam layout */
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .left {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .left h2 {
+            margin-bottom: 15px;
+            color: #5900ff;
+        }
+
+        .left p {
+            line-height: 1.8;
+            color: #dcdcdc;
+            margin-bottom: 15px;
+        }
+
+        .right {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .meta span {
+            display: block;
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+
+        .meta strong {
+            color: white;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            background: #5900ff;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #7a2cff;
+            box-shadow: 0 0 25px #5900ff;
+        }
+
+        @media(max-width:900px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="particles"></canvas>
+
+    <div class="container">
+
+        <div class="header">
+            <a href="https://belfayza.github.io/games/" class="back-btn">BACK</a>
+            <div class="title">Devil May Cry 4</div>
+        </div>
+
+        <div class="banner">
+            <img src="thumbnail/dmc4.jpg" alt="TheoTown">
+        </div>
+
+        <div class="content">
+
+            <!-- LEFT -->
+            <div class="left">
+                <h2>About This Game</h2>
+
+                <p>
+                    From the producer of the original Devil May Cry® and Resident Evil® 4 comes the next installment in
+                    the hugely successful stylized action series that has so far achieved global sales of nearly seven
+                    million units.
+                </p>
+
+                <p>
+                    Devil May Cry® 4 immerses gamers in a gothic supernatural world, where a new protagonist clashes
+                    with a familiar hero. As the new leading man, Nero, players will unleash incredible attacks and
+                    non-stop combos using a unique new gameplay mechanic, his powerful "Devil Bringer" arm.
+                </p>
+
+                <p>
+                    With the advanced graphical capabilities of the PC, high definition visuals and intricate detail
+                    come to life as players explore new and exotic locales. Dynamic action and undeniable style combine
+                    with explosive fighting options and a gripping story to produce the incomparable experience that
+                    only a Devil May Cry game can deliver.
+                </p>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="right">
+
+                <div class="meta">
+                    <span><strong>Nama Game:</strong> Devil May Cry 4</span>
+                    <span><strong>Versi:</strong> v1.0</span>
+                    <span><strong>Ukuran:</strong> 8 GB</span>
+                    <span><strong>Platform:</strong> Windows</span>
+                </div>
+
+                <a href="https://drive.google.com/file/d/10UUTMXnchZ8Oy5cMcqeNm1xlJvQNzczu/view" class="download-btn">
+                    DOWNLOAD
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        let particles = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 70 + 20;
+                this.speedY = Math.random() * 5 + 5;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -100) {
+                    this.y = canvas.height + 50;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                let gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size
+                );
+                gradient.addColorStop(0, `rgba(89,0,255,${this.opacity})`);
+                gradient.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+
+</body>
+
+</html>

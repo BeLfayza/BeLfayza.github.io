@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             content: "";
             position: fixed;
             inset: 0;
-            background: linear-gradient(to right, rgba(0,0,0,0.85) 40%, rgba(0,0,0,0.4));
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 40%, rgba(0, 0, 0, 0.4));
             z-index: 0;
         }
 
@@ -117,13 +118,13 @@
             z-index: 3;
         }
 
-        @media(max-width: 900px){
+        @media(max-width: 900px) {
             .gallery {
-                grid-template-columns: repeat(2,1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media(max-width: 600px){
+        @media(max-width: 600px) {
             .gallery {
                 grid-template-columns: 1fr;
             }
@@ -138,90 +139,95 @@
 
 <body>
 
-<canvas id="particles"></canvas>
+    <canvas id="particles"></canvas>
 
-<div class="top-bar">
-    <a href="https://belfayza.github.io/">BACK TO HOME</a>
-    <h1>PRE-INSTALLED GAMES</h1>
-</div>
-
-<div class="gallery">
-
-    <div class="card" onclick="location.href='https://belfayza.github.io/games/theotown'">
-        <img src="thumbnail/theotown.jpg" alt="TheoTown">
-        <div class="card-title">THEOTOWN</div>
+    <div class="top-bar">
+        <a href="https://belfayza.github.io/">BACK TO HOME</a>
+        <h1>PRE-INSTALLED GAMES</h1>
     </div>
 
-    <div class="card" onclick="location.href='https://belfayza.github.io/games/gtasan'">
-        <img src="thumbnail/gtasan.jpg" alt="GTA SA">
-        <div class="card-title">GTA SAN ANDREAS</div>
+    <div class="gallery">
+
+        <div class="card" onclick="location.href='https://belfayza.github.io/games/theotown'">
+            <img src="thumbnail/theotown.jpg" alt="TheoTown">
+            <div class="card-title">THEOTOWN</div>
+        </div>
+
+        <div class="card" onclick="location.href='https://belfayza.github.io/games/gtasan'">
+            <img src="thumbnail/gtasan.jpg" alt="GTA SA">
+            <div class="card-title">GTA SAN ANDREAS</div>
+        </div>
+
+        <div class="card" onclick="location.href='https://belfayza.github.io/games/dmc4'">
+            <img src="thumbnail/dmc4.jpg" alt="DMC4">
+            <div class="card-title">Devil May Cry 4</div>
+        </div>
     </div>
 
-</div>
+    <script>
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
 
-<script>
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
 
-window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
+        let particles = [];
 
-let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 70 + 20;
+                this.speedY = Math.random() * 5 + 5;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
 
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = canvas.height + Math.random() * 100;
-        this.size = Math.random() * 70 + 20;
-        this.speedY = Math.random() * 5 + 5;
-        this.opacity = Math.random() * 0.4 + 0.1;
-    }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < -100) {
+                    this.y = canvas.height + 50;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
 
-    update() {
-        this.y -= this.speedY;
-        if (this.y < -100) {
-            this.y = canvas.height + 50;
-            this.x = Math.random() * canvas.width;
+            draw() {
+                ctx.beginPath();
+                let gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size
+                );
+                gradient.addColorStop(0, `rgba(89,0,255,${this.opacity})`);
+                gradient.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
         }
-    }
 
-    draw() {
-        ctx.beginPath();
-        let gradient = ctx.createRadialGradient(
-            this.x, this.y, 0,
-            this.x, this.y, this.size
-        );
-        gradient.addColorStop(0, `rgba(89,0,255,${this.opacity})`);
-        gradient.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = gradient;
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
+        function init() {
+            for (let i = 0; i < 30; i++) {
+                particles.push(new Particle());
+            }
+        }
 
-function init() {
-    for (let i = 0; i < 30; i++) {
-        particles.push(new Particle());
-    }
-}
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
-}
-
-init();
-animate();
-</script>
+        init();
+        animate();
+    </script>
 
 </body>
+
 </html>
